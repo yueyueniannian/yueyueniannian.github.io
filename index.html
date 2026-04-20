@@ -8,8 +8,8 @@
       :root {
         --bg: #ffffff;
         --card: #ffffff;
-        --line: #dde3eb;
-        --line-soft: #ebeff4;
+        --line: #dbe2ea;
+        --line-soft: #e9eef3;
         --text-main: #1f2937;
         --text-sub: #4b5563;
         --accent: #2f4f77;
@@ -50,11 +50,14 @@
       }
 
       .avatar-wrap {
+        position: relative;
         width: 112px;
         height: 112px;
       }
 
       .avatar-photo {
+        position: absolute;
+        inset: 0;
         width: 112px;
         height: 112px;
         border-radius: 50%;
@@ -63,6 +66,8 @@
       }
 
       .avatar-fallback {
+        position: absolute;
+        inset: 0;
         width: 112px;
         height: 112px;
         border-radius: 50%;
@@ -72,6 +77,10 @@
         display: grid;
         place-items: center;
         font-size: 34px;
+      }
+
+      .avatar-fallback[hidden] {
+        display: none !important;
       }
 
       h1 {
@@ -87,26 +96,11 @@
         font-size: 16px;
       }
 
-      .meta {
-        margin-top: 14px;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-
-      .chip {
-        font-size: 13px;
-        padding: 5px 11px;
-        border-radius: 999px;
-        border: 1px solid var(--line);
-        color: #334155;
-        background: #fcfdff;
-      }
-
       .contact {
-        margin: 14px 0 0;
+        margin: 12px 0 0;
         color: var(--text-sub);
         font-size: 15px;
+        line-height: 1.8;
       }
 
       .contact a {
@@ -121,11 +115,30 @@
         font-weight: 600;
       }
 
-      ul {
+      .experience-list {
+        display: grid;
+        gap: 14px;
+      }
+
+      .experience-item {
+        border: 1px solid var(--line-soft);
+        border-radius: 10px;
+        padding: 14px 16px;
+        background: #fcfdff;
+      }
+
+      .experience-title {
         margin: 0;
-        padding-left: 1.2em;
+        font-size: 18px;
+        font-weight: 600;
+        color: #243447;
+      }
+
+      .experience-desc {
+        margin: 8px 0 0;
         color: #334155;
-        line-height: 1.75;
+        line-height: 1.8;
+        font-size: 15px;
       }
 
       .cv-note {
@@ -213,26 +226,34 @@
           <div>
             <h1>Chen Zhang / 张辰</h1>
             <p class="tagline">循此苦旅，以达繁星</p>
-            <div class="meta">
-              <span class="chip">个人主页</span>
-              <span class="chip">学术风格</span>
-              <span class="chip">中文 CV</span>
-            </div>
             <p class="contact">
-              邮箱：<a href="mailto:231098084@smail.nju.edu.cn">231098084@smail.nju.edu.cn</a>
-              ｜ 微信：zc18994331890
+              地区：中国南京<br />
+              邮箱：<a href="mailto:231098084@smail.nju.edu.cn">231098084@smail.nju.edu.cn</a><br />
+              GitHub：<a href="https://github.com/yueyueniannian/" target="_blank" rel="noopener noreferrer">https://github.com/yueyueniannian/</a>
             </p>
           </div>
         </div>
       </section>
 
       <section class="card">
-        <h2>个人信息摘要</h2>
-        <ul>
-          <li>关注长期主义与严谨表达，重视问题定义与方法论清晰度。</li>
-          <li>习惯将复杂任务拆解为结构化步骤，强调可验证与可复现。</li>
-          <li>偏好简洁、克制、信息密度高的设计与沟通方式。</li>
-        </ul>
+        <h2>科研经历</h2>
+        <div class="experience-list">
+          <article class="experience-item">
+            <h3 class="experience-title">南京大学智能科学与技术学院</h3>
+            <p class="experience-desc">
+              研究课题：<strong>UniPPTBench: A Unified Benchmark for Presentation Generation across Diverse Input Settings</strong>。<br />
+              投稿信息：ACM MM 2026（under review）。<br />
+              作者贡献：共同第一作者。
+            </p>
+          </article>
+          <article class="experience-item">
+            <h3 class="experience-title">上海交通大学可扩展计算研究所（科研实习）</h3>
+            <p class="experience-desc">
+              研究方向：Skill 内化机制。<br />
+              主要工作：围绕模型在复杂任务中的技能形成与迁移展开研究，关注机制解释与可验证性。
+            </p>
+          </article>
+        </div>
       </section>
 
       <section class="card">
