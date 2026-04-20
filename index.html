@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>我的个人主页</title>
+    <style>
+      :root {
+        --bg-1: #fff8ee;
+        --bg-2: #fef1e6;
+        --card: #fffdf9;
+        --text-main: #2f2a26;
+        --text-sub: #6d6259;
+        --line: #f1dfce;
+        --accent: #d48a64;
+        --accent-soft: #ffe2d0;
+        --ok: #3f8b69;
+        --shadow: 0 14px 36px rgba(205, 167, 135, 0.18);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        color: var(--text-main);
+        font-family: "Source Han Serif SC", "Noto Serif SC", "Songti SC",
+          "STZhongsong", serif;
+        background: linear-gradient(140deg, var(--bg-1), var(--bg-2));
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      body::before,
+      body::after {
+        content: "";
+        position: fixed;
+        border-radius: 50%;
+        pointer-events: none;
+        z-index: -1;
+        filter: blur(2px);
+      }
+
+      body::before {
+        width: 340px;
+        height: 340px;
+        background: rgba(255, 220, 194, 0.58);
+        top: -120px;
+        right: -60px;
+      }
+
+      body::after {
+        width: 260px;
+        height: 260px;
+        background: rgba(255, 239, 219, 0.7);
+        bottom: -80px;
+        left: -80px;
+      }
+
+      .page {
+        width: min(940px, calc(100% - 32px));
+        margin: 40px auto;
+        display: grid;
+        gap: 20px;
+      }
+
+      .card {
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 24px;
+        box-shadow: var(--shadow);
+        padding: 24px;
+        animation: rise 500ms ease both;
+      }
+
+      .intro {
+        display: grid;
+        gap: 16px;
+      }
+
+      .avatar {
+        width: 86px;
+        height: 86px;
+        border-radius: 50%;
+        background: radial-gradient(circle at 30% 30%, #ffe8d9, #f5c9ae);
+        color: #7d4a31;
+        display: grid;
+        place-items: center;
+        font-size: 30px;
+        font-weight: 700;
+        border: 2px solid #f3d3bf;
+      }
+
+      h1 {
+        margin: 0;
+        font-size: clamp(28px, 4.2vw, 42px);
+        letter-spacing: 0.04em;
+      }
+
+      .tagline {
+        margin: 6px 0 0;
+        color: var(--text-sub);
+        font-size: 16px;
+      }
+
+      .meta {
+        margin-top: 10px;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .chip {
+        border-radius: 999px;
+        border: 1px solid var(--line);
+        background: #fff8f3;
+        color: #6c5648;
+        font-size: 13px;
+        padding: 6px 12px;
+      }
+
+      h2 {
+        margin: 0 0 12px;
+        font-size: 22px;
+      }
+
+      ul {
+        margin: 0;
+        padding-left: 1.2em;
+        display: grid;
+        gap: 8px;
+        color: #4b443e;
+      }
+
+      .cv-box {
+        display: grid;
+        gap: 14px;
+      }
+
+      .cv-note {
+        margin: 0;
+        color: var(--text-sub);
+        font-size: 14px;
+        line-height: 1.7;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      input[type="file"] {
+        position: absolute;
+        left: -9999px;
+      }
+
+      .btn {
+        border: 1px solid transparent;
+        border-radius: 12px;
+        font-size: 14px;
+        line-height: 1;
+        padding: 11px 16px;
+        cursor: pointer;
+        transition: transform 180ms ease, box-shadow 180ms ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-upload {
+        background: linear-gradient(135deg, #d9936d, #c67f59);
+        color: #fffdf7;
+        box-shadow: 0 8px 16px rgba(198, 127, 89, 0.3);
+      }
+
+      .btn-soft {
+        background: var(--accent-soft);
+        color: #814d2d;
+        border-color: #f5ccb1;
+      }
+
+      .btn-ghost {
+        background: transparent;
+        color: #7a6b60;
+        border-color: #e7d6c8;
+      }
+
+      .cv-status {
+        background: #fff8f2;
+        border: 1px dashed #ebc8af;
+        border-radius: 16px;
+        padding: 14px;
+        line-height: 1.75;
+        color: #5c5047;
+        font-size: 14px;
+      }
+
+      .cv-status strong {
+        color: #3f3229;
+      }
+
+      .ok {
+        color: var(--ok);
+      }
+
+      .warn {
+        color: #a75a2f;
+      }
+
+      .contact {
+        color: var(--text-sub);
+        font-size: 14px;
+      }
+
+      .contact a {
+        color: #946247;
+        text-decoration: none;
+        border-bottom: 1px dotted #d3aa8d;
+      }
+
+      .contact a:hover {
+        color: #7c4a2f;
+      }
+
+      @keyframes rise {
+        from {
+          opacity: 0;
+          transform: translateY(12px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 640px) {
+        .page {
+          width: calc(100% - 22px);
+          margin: 20px auto 24px;
+        }
+        .card {
+          padding: 18px;
+          border-radius: 18px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="page">
+      <section class="card intro">
+        <div class="avatar" aria-hidden="true">你</div>
+        <div>
+          <h1>你的名字</h1>
+          <p class="tagline">在这里写一句个人简介，例如：专注前端体验与内容表达。</p>
+        </div>
+        <div class="meta">
+          <span class="chip">现居：上海</span>
+          <span class="chip">方向：产品 / 开发</span>
+          <span class="chip">状态：开放机会</span>
+        </div>
+        <p class="contact">
+          联系方式：<a href="mailto:yourname@example.com">yourname@example.com</a>
+          ·
+          <a href="https://github.com/" target="_blank" rel="noopener noreferrer"
+            >GitHub</a
+          >
+        </p>
+      </section>
+
+      <section class="card">
+        <h2>个人信息摘要</h2>
+        <ul>
+          <li>擅长把复杂需求拆解成可执行方案，关注交付质量与可维护性。</li>
+          <li>有完整项目经历，覆盖需求沟通、开发实现、上线与优化。</li>
+          <li>重视用户体验，追求界面简洁、信息清晰、交互自然。</li>
+          <li>习惯持续学习和复盘，通过工具与流程提升效率。</li>
+        </ul>
+      </section>
+
+      <section class="card cv-box">
+        <h2>中文 CV 上传</h2>
+        <p class="cv-note">
+          支持 `PDF / DOC / DOCX`。文件只保存在当前浏览器（前端本地，不上传服务器）。<br />
+          建议文件不超过 3MB，便于稳定保存到本地浏览器存储。
+        </p>
+
+        <input
+          id="cvInput"
+          type="file"
+          accept=".pdf,.doc,.docx,application/pdf,application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+        />
+        <div class="actions">
+          <button class="btn btn-upload" id="chooseBtn" type="button">上传或替换 CV</button>
+          <button class="btn btn-soft" id="previewBtn" type="button" hidden>预览 PDF</button>
+          <button class="btn btn-soft" id="downloadBtn" type="button" hidden>下载当前 CV</button>
+          <button class="btn btn-ghost" id="clearBtn" type="button" hidden>清除 CV</button>
+        </div>
+
+        <div class="cv-status" id="cvStatus">
+          当前未上传 CV。点击“上传或替换 CV”后即可启用下载。
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const STORAGE_KEY = "personal_homepage_cv_file";
+      const MAX_FILE_SIZE = 3 * 1024 * 1024;
+
+      const cvInput = document.getElementById("cvInput");
+      const chooseBtn = document.getElementById("chooseBtn");
+      const previewBtn = document.getElementById("previewBtn");
+      const downloadBtn = document.getElementById("downloadBtn");
+      const clearBtn = document.getElementById("clearBtn");
+      const cvStatus = document.getElementById("cvStatus");
+
+      let currentFile = null;
+
+      function formatSize(bytes) {
+        if (bytes < 1024) return bytes + " B";
+        if (bytes < 1024 * 1024) return (bytes / 1024).toFixed(1) + " KB";
+        return (bytes / (1024 * 1024)).toFixed(2) + " MB";
+      }
+
+      function formatTime(isoTime) {
+        const d = new Date(isoTime);
+        if (Number.isNaN(d.getTime())) return "未知时间";
+        return d.toLocaleString("zh-CN", { hour12: false });
+      }
+
+      function getFileExt(fileName) {
+        const seg = fileName.split(".");
+        return seg.length > 1 ? seg.pop().toLowerCase() : "";
+      }
+
+      function isSupported(fileName) {
+        const ext = getFileExt(fileName);
+        return ["pdf", "doc", "docx"].includes(ext);
+      }
+
+      function renderStatus(message, stateClass) {
+        cvStatus.classList.remove("ok", "warn");
+        if (stateClass) cvStatus.classList.add(stateClass);
+        cvStatus.innerHTML = message;
+      }
+
+      function updateButtons() {
+        const hasData = Boolean(currentFile);
+        previewBtn.hidden = !(hasData && currentFile.type === "application/pdf");
+        downloadBtn.hidden = !hasData;
+        clearBtn.hidden = !hasData;
+      }
+
+      function saveToStorage(payload) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+      }
+
+      function loadFromStorage() {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        try {
+          return JSON.parse(raw);
+        } catch {
+          localStorage.removeItem(STORAGE_KEY);
+          return null;
+        }
+      }
+
+      function clearStorage() {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+
+      function setCurrentFile(payload) {
+        currentFile = payload;
+        if (!payload) {
+          renderStatus("当前未上传 CV。点击“上传或替换 CV”后即可启用下载。");
+          updateButtons();
+          return;
+        }
+
+        const text = [
+          "<strong>已保存 CV</strong>",
+          "文件名：" + payload.name,
+          "大小：" + formatSize(payload.size),
+          "更新时间：" + formatTime(payload.updatedAt),
+        ].join("<br />");
+        renderStatus(text, "ok");
+        updateButtons();
+      }
+
+      chooseBtn.addEventListener("click", function () {
+        cvInput.click();
+      });
+
+      cvInput.addEventListener("change", function () {
+        const file = cvInput.files && cvInput.files[0];
+        if (!file) return;
+
+        if (!isSupported(file.name)) {
+          renderStatus("文件格式不支持，请上传 PDF、DOC 或 DOCX。", "warn");
+          cvInput.value = "";
+          return;
+        }
+
+        if (file.size > MAX_FILE_SIZE) {
+          renderStatus("文件过大，请控制在 3MB 以内再上传。", "warn");
+          cvInput.value = "";
+          return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const dataUrl = e.target && e.target.result;
+          if (typeof dataUrl !== "string") {
+            renderStatus("读取文件失败，请重试。", "warn");
+            return;
+          }
+
+          const payload = {
+            name: file.name,
+            type: file.type || "application/octet-stream",
+            size: file.size,
+            updatedAt: new Date().toISOString(),
+            dataUrl,
+          };
+
+          try {
+            saveToStorage(payload);
+            setCurrentFile(payload);
+          } catch {
+            renderStatus(
+              "本地存储空间不足，未能保存。请压缩文件后重试，或清除旧文件。",
+              "warn"
+            );
+          } finally {
+            cvInput.value = "";
+          }
+        };
+
+        reader.onerror = function () {
+          renderStatus("读取文件失败，请重试。", "warn");
+          cvInput.value = "";
+        };
+
+        reader.readAsDataURL(file);
+      });
+
+      previewBtn.addEventListener("click", function () {
+        if (!currentFile || currentFile.type !== "application/pdf") return;
+        window.open(currentFile.dataUrl, "_blank", "noopener,noreferrer");
+      });
+
+      downloadBtn.addEventListener("click", function () {
+        if (!currentFile) return;
+        const a = document.createElement("a");
+        a.href = currentFile.dataUrl;
+        a.download = currentFile.name || "cv";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+      });
+
+      clearBtn.addEventListener("click", function () {
+        clearStorage();
+        setCurrentFile(null);
+      });
+
+      setCurrentFile(loadFromStorage());
+    </script>
+  </body>
+</html>
